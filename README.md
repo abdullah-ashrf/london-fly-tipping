@@ -52,7 +52,7 @@ In 2026 I compared the forecast with the three years of real figures published s
 
 Enforcement actions went **up**, not down.
 
-**What went wrong.** The scripts build the time series with `ts(dataset$total_action_taken, start = min(dataset$year))` and never sort the rows by year. The values on the original charts start at 5,790 and fall smoothly to 3,748. Those are the eleven yearly averages ordered from largest to smallest, not from 2011 to 2021. The model learned a steady decline that was never in the data. In time order the series goes 4,530 → 3,748 → 5,010 → … → 5,790: bumpy, and rising overall.
+**What went wrong.** The scripts build the time series with `ts(dataset$total_action_taken, start = min(dataset$year))` and never sort the rows by year. The values on the original charts start at 5,790 and fall smoothly to 3,748. Those are the eleven yearly averages ordered from largest to smallest, not from 2011 to 2021. The model learned a steady decline that was never in the data. The sorted series also reproduces the original error figures: it gives a MAPE of 3.42% on all eleven points (the report says 3.4%) and 2.70% on the first eight (the report says 2.67%). In year order the same calculation gives about 13%. In time order the series goes 4,530 → 3,748 → 5,010 → … → 5,790: bumpy, and rising overall.
 
 **Why the error figures looked good.** `accuracy()` was called on the forecast alone, which reports error on the data the model was fitted to. A smooth, sorted series is easy to fit, so MAPE came out at 2.67% and 3.4%. Neither number says anything about years the model had not seen.
 
